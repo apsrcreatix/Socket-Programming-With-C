@@ -1,2 +1,2 @@
 # network-programming
-## Learning Network Protocol and Network Programming Using **C**
+## Learning Network Protocol and Programming Using **C**
