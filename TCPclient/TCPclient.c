@@ -50,7 +50,7 @@ char server_response[256];
 recv(network_socket,&server_response,sizeof(server_response),0);
 //recieved data from the server successfully then printing the data obtained from the server
 
-printf("Ther server sent the data : %s\n",server_response);
+printf("Ther server sent the data : %s",server_response);
 //closing the socket
 close(network_socket);
   return 0;
