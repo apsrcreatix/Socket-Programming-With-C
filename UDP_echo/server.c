@@ -1,3 +1,8 @@
+/**
+ * Title : echo server
+ * Name : Aditya Pratap Singh Rajput
+ * Subject : Network Protocols And Programming
+*/
 #include<stdio.h>
 #include<stdlib.h>
 #include<sys/types.h>
@@ -5,7 +10,6 @@
 #include<netinet/in.h>
 #include<unistd.h>
 // time
-
 
 #define MAXLINE 1024
 

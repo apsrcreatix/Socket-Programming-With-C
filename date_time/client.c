@@ -1,36 +1,49 @@
+/**
+ * Title : Day-Time client
+ * Name : Aditya Pratap Singh Rajput
+ * Subject : Network Protocols And Programming
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
+#include "string.h"
 
-#define MAXLINE 1024
+#define PORT 9002 //the port users will be connecting to
+#define MAXLINE 500 //for buffer size
 
 int main(){
-  int socket_descriptor;
-  int n;
-  socklen_t length;
-  char sendline[MAXLINE],recvline[MAXLINE];
+
+  //variable for socket descriptor
+  int socket_descriptor = socket(AF_INET, SOCK_STREAM, 0);
+
   struct sockaddr_in servaddr;
-  printf("\nEnter message :");
-  scanf("%s",sendline);
-  socket_descriptor = socket(AF_INET,SOCK_DGRAM,0);
+  
 
   servaddr.sin_family = AF_INET;
   servaddr.sin_addr.s_addr = INADDR_ANY;
-  servaddr.sin_port = htons(5035);
+  servaddr.sin_port = htons(PORT);
 
-int isConnect = connect(socket_descriptor,(struct sockaddr*)&servaddr,sizeof(servaddr));
+//if not connected then print the error message
+  if (connect(socket_descriptor, (struct sockaddr *)&servaddr, sizeof(servaddr)) == -1)
+  {
+   perror("\nNot connected");
+   exit(0);
+  }
 
-if(isConnect==-1){
-  printf("\nNot connected");
+  char server_response[MAXLINE];
+
+
+  
+  //if not received the data it will show the error message
+if(recv(socket_descriptor,server_response,MAXLINE-1,0)==-1){
+  perror("recv");
+  exit(0);
 }
 
-  length = sizeof(servaddr);
-  sendto(socket_descriptor,sendline,MAXLINE,0,(struct sockaddr*)&servaddr,length);
-  n=recvfrom(socket_descriptor,recvline,MAXLINE,0,NULL,NULL);
-  recvline[n]=0;
-  printf("\nServer's Echo : %s\n",recvline);
+  printf("\nTIME FROM SERVER %s\n",server_response);
 
   return 0;
 }
