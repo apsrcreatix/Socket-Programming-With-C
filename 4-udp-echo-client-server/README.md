@@ -1,7 +1,6 @@
 # UDP ECHO SERVER
 
-The simplest form of client-server interaction uses unreliable datagram delivery to
-convey messages from a client to a server and back. Consider, for example, a UDP echo server.
+The simplest form of client-server interaction uses unreliable datagram delivery to convey messages from a client to a server and back. Consider, for example, a UDP echo server.
 
 At the server site, a UDP echo server process begins by negotiating with its operating system
 for permission to use the UDP port ID reserved for the echo service, the UDP echo port.
