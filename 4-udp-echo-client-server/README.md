@@ -22,8 +22,6 @@ A client is any program that makes a request and awaits a response;
 it (usually) terminates afer using a server a finite number of times.
 
 
-
-
 A server waits for requests at a well-known port that has been
 reserved for the service it offers. A client allocates an arbitrary,
 unused nonreservedport for its communication.
