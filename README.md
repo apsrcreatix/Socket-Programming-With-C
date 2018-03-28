@@ -26,12 +26,7 @@ The Purpose of learning this course is to understand the various network layer, 
 
 ### Reference
 
-<<<<<<< HEAD
 [Reference for socket](https://linux.die.net/man/7/socket)
-=======
-[https://linux.die.net/man/7/socket](https://linux.die.net/man/7/socket)
->>>>>>> a7d86cfd57c1700967e5a6107c47e39ca6bad836
-
 
 
 
