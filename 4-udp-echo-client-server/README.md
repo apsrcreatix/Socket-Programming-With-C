@@ -1,4 +1,4 @@
-## UDP ECHO SERVER
+# UDP ECHO SERVER
 
 The simplest form of client-server interaction uses unreliable datagram delivery to
 convey messages from a client to a server and back. Consider, for example, a UDP echo server.
@@ -20,9 +20,6 @@ A server starts execution before interaction begins and (usually) continues to a
 requests and send responses without ever terminating.
 A client is any program that makes a request and awaits a response;
 it (usually) terminates afer using a server a finite number of times.
-
-
-
 
 A server waits for requests at a well-known port that has been
 reserved for the service it offers. A client allocates an arbitrary,
