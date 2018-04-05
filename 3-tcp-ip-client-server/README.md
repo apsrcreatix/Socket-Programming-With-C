@@ -5,11 +5,15 @@ common networking protocols like HTTP and FTP rely on the sockets underneath to 
 
 ## client socket workflow
 
-socket()
+## Client socket workflow
+
+**socket()
 |
 connect()
 |
-recv()
+recv()**
+
+- The client socket is created with a socket() call, and the connected to a remote address with the connect() call, and then finally can retrive data with recv() call.
 
 the client socket is created with a socket() call, and the connected to a remote address with the connect() call, and then finally can retrive data with recv() call.
 
