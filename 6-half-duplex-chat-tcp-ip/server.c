@@ -6,12 +6,21 @@
 Note : please consider the TYPOS in comments.
 Thanks.
 */
-#include <stdio.h>
-#include <stdlib.h>
+
+
+#include "stdio.h"
+#include "stdlib.h"
+#include "string.h"
+//headers for socket and related functions
 #include <sys/types.h>
 #include <sys/socket.h>
+//for including structures which will store information needed
 #include <netinet/in.h>
 #include <unistd.h>
+//for gethostbyname
+#include "netdb.h"
+#include "arpa/inet.h"
+
 #define BACKLOG 5 // how many pending connections queue will hold
 int main()
 {

@@ -19,12 +19,15 @@ Thanks.
 #include "netdb.h"
 #include "arpa/inet.h"
 
-//main functions
+//defines
+#define h_addr h_addr_list[0] /* for backward compatibility */
+
 #define PORT 9002 // port number
 #define MAX 1000  //maximum buffer size
 #define MAX_ONE 1000  //maximum buffer size : second option
-int main()
-{
+
+//main function
+int main(){
    
     //creating a socket
     int network_socket;

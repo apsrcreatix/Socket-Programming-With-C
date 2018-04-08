@@ -1,15 +1,13 @@
 # Learn Network Protocol and Programming Using **C**
 
-### Prerequisite
+## Prerequisite
 
 * Basics of computer networks
 * Intermediate in C language
 
-### Purpose
+## Purpose
 
-The Purpose of learning this course is to understand the various network layer, transport layer  
- and application layer protocols and it also helps to design and implement the protocols using  
- socking programming.
+The Purpose of learning this course is to understand the various network layer, transport layer and application layer protocols and it also helps to design and implement the protocols using socking programming.
 
 ### List Of Experiment
 
@@ -27,7 +25,3 @@ The Purpose of learning this course is to understand the various network layer, 
 ### Reference
 
 [Reference for socket](https://linux.die.net/man/7/socket)
-
-
-
-
