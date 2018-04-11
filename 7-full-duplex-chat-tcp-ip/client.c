@@ -54,18 +54,20 @@ int main(int argc, char *argv[])
     struct sockaddr_in server_address;
 
     bzero(&server_address, sizeof(server_address));
-    //what type of address we are woking with
-    server_address.sin_family = AF_INET;
-   
+
+    struct hostent *host;
+    host=gethostbyname("127.0.0.1");
     //for taking the port number and htons converts the port # to the appropriate data type we want to write
     //to specifying the port
     //htons : conversion functions
     server_address.sin_port = htons(PORT);
    
     //structure within structure A.B.c
-    server_address.sin_addr.s_addr = inet_addr("127.0.0.1"); 
+    memcpy((char *)&server_address.sin_addr.s_addr,host->h_addr_list[0],host->h_length); 
+
+    //what type of address we are woking with
+    server_address.sin_family = host->h_addrtype;
     
-   
     //connect returns us a response that connection is establlised or not
     //check for the error with the connection
     if (connect(network_socket, (struct sockaddr *)&server_address, sizeof(server_address)) == -1)
