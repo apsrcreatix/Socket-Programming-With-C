@@ -1,3 +1,12 @@
+/*
+ * Title : Remote command execution using UDP
+ * Name : Aditya Pratap Singh Rajput
+ * Subject : Network Protocols And Programming
+
+Note : please consider the TYPOS in comments.
+Thanks.
+*/
+
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <stdio.h>

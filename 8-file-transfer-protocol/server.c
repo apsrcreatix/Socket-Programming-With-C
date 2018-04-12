@@ -25,7 +25,8 @@ Thanks.
 #define PORT 9002
 #define BACKLOG 5
 int main()
-{   int size;
+{
+    int size;
     int socket_descriptor = socket(AF_INET, SOCK_STREAM, 0);
     struct sockaddr_in server_address, client_address;
     socklen_t client_length;

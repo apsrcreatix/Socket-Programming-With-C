@@ -1,8 +1,14 @@
+
+/**
+ * This code has some error. Please wait for debugged code.
+*/
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <net/if_arp.h>
 #include <sys/ioctl.h>
 #include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
 #include <unistd.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
