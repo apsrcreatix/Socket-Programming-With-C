@@ -1,8 +1,7 @@
 /*
  * Title : Full duplex client side 
  * Name : Aditya Pratap Singh Rajput
- * Subject : Network Protocols And Programming
-
+ * Subject : Network Protocols And Programming using C
 Note : please consider the TYPOS in comments.
 Thanks.
 */

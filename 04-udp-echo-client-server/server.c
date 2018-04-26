@@ -1,8 +1,9 @@
 /**
  * Title : echo server
  * Name : Aditya Pratap Singh Rajput
- * Subject : Network Protocols And Programming
-*/
+ * Subject : Network Protocols And Programming using C
+ * 
+ * */
 #include<stdio.h>
 #include<stdlib.h>
 #include<sys/types.h>
