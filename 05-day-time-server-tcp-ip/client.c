@@ -13,38 +13,25 @@
 #include "string.h"
 
 #define PORT 9002 //the port users will be connecting to
-#define MAXLINE 500 //for buffer size
+#define MAXLINE 30 //for buffer size
 
 int main(){
 
-  //variable for socket descriptor
   int socket_descriptor = socket(AF_INET, SOCK_STREAM, 0);
-
-  struct sockaddr_in servaddr;
   
+  char serverResponse[MAXLINE];
 
-  servaddr.sin_family = AF_INET;
-  servaddr.sin_addr.s_addr = INADDR_ANY;
-  servaddr.sin_port = htons(PORT);
-
-//if not connected then print the error message
-  if (connect(socket_descriptor, (struct sockaddr *)&servaddr, sizeof(servaddr)) == -1)
-  {
-   perror("\nNot connected");
-   exit(0);
-  }
-
-  char server_response[MAXLINE];
-
-
+  struct sockaddr_in serverAddress;
   
-  //if not received the data it will show the error message
-if(recv(socket_descriptor,server_response,MAXLINE-1,0)==-1){
-  perror("recv");
-  exit(0);
-}
+  serverAddress.sin_family = AF_INET;
+  serverAddress.sin_addr.s_addr = INADDR_ANY;
+  serverAddress.sin_port = htons(PORT);
 
-  printf("\nTIME FROM SERVER %s\n",server_response);
+connect(socket_descriptor, (struct sockaddr *)&serverAddress, sizeof(serverAddress));
+  
+recv(socket_descriptor,serverResponse,MAXLINE-1,0);
+
+  printf("\nTIME FROM SERVER %s\n",serverResponse);
 
   return 0;
 }
