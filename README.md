@@ -22,6 +22,12 @@ The Purpose of learning this course is to understand the various network layer, 
 9. Remote Command Execution Using UDP.
 10. Arp Implementation Using UDP.
 
+### Tips for using the repository
+
+* Use ```bash make``` . Example : ```bash make fileName``` (without extention C)
+* It will make server and client file for you.
+* Test using ```bash ./server``` in a terminal separately and ```bash ./client``` in a different terminal.
+
 ### Reference
 
 [Reference for socket](https://linux.die.net/man/7/socket)
