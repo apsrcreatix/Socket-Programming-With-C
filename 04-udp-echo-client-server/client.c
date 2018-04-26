@@ -7,37 +7,43 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
 
 #define MAXLINE 1024
+#define PORT 5035
 
 int main(){
-  int socket_descriptor;
-  int n;
-  socklen_t length;
-  char sendline[MAXLINE],recvline[MAXLINE];
-  struct sockaddr_in servaddr;
+  // socket descriptor creation in udp mode
+  int serverDescriptor = socket(AF_INET, SOCK_DGRAM, 0);
+  
+  // for storing  address of address
+  socklen_t addressLength;
+  
+  // preparing message 
+  char sendMessage[MAXLINE],recvMessage[MAXLINE];
   printf("\nEnter message :");
-  scanf("%s",sendline);
-  socket_descriptor = socket(AF_INET,SOCK_DGRAM,0);
+  fgets(sendMessage,sizeof(sendMessage),stdin);
+  
+  // storing address in serverAddress
+  struct sockaddr_in serverAddress;
+  serverAddress.sin_family = AF_INET;
+  serverAddress.sin_addr.s_addr = INADDR_ANY;
+  serverAddress.sin_port = htons(PORT);
+  
+  // storing address size 
+  addressLength = sizeof(serverAddress);
 
-  servaddr.sin_family = AF_INET;
-  servaddr.sin_addr.s_addr = INADDR_ANY;
-  servaddr.sin_port = htons(5035);
-
-int isConnect = connect(socket_descriptor,(struct sockaddr*)&servaddr,sizeof(servaddr));
-
-if(isConnect==-1){
-  printf("\nNot connected");
-}
-
-  length = sizeof(servaddr);
-  sendto(socket_descriptor,sendline,MAXLINE,0,(struct sockaddr*)&servaddr,length);
-  n=recvfrom(socket_descriptor,recvline,MAXLINE,0,NULL,NULL);
-  recvline[n]=0;
-  printf("\nServer's Echo : %s\n",recvline);
+  // checking connection
+  connect(serverDescriptor,(struct sockaddr*)&serverAddress,addressLength);
+  
+  // sending and receiving the messages 
+  sendto(serverDescriptor,sendMessage,MAXLINE,0,(struct sockaddr*)&serverAddress,addressLength);
+  recvfrom(serverDescriptor,recvMessage,MAXLINE,0,NULL,NULL);
+ 
+  printf("\nServer's Echo : %s\n",recvMessage);
 
   return 0;
 }

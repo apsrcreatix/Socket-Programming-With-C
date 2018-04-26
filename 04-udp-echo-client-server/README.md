@@ -25,3 +25,25 @@ unused nonreservedport for its communication.
 
 It is not a service that the average user finds interesting. However, programmers who design, implement, measure, or modify network protocol software, or network managers who test routes and debug communication problems, often use echo servers in testing. For example, an echo service can be used
 to determineif it is possible to reach a remote machine.
+
+## Learn about code
+
+* For implementation of UDP use SOCK_DGRAM
+
+```C
+  int serverDescriptor = socket(AF_INET, SOCK_DGRAM, 0);
+```
+
+* For sending message use sendto function
+
+```C
+  sendto(serverDescriptor,sendMessage,MAXLINE,0,(struct sockaddr*)&serverAddress,addressLength);
+```
+
+* For recieving message use recv
+
+```C
+  recvfrom(socketDescriptor,message,MAXLINE,0,(struct sockaddr*)&clientAddress,&addressLength);
+```
+
+* On server side only use ```bind()``` function

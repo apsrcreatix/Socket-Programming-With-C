@@ -13,36 +13,36 @@
 // time
 
 #define MAXLINE 1024
+#define PORT 5035
 
 int main(){
 
-  int socket_descriptor;
-  int n;
-  socklen_t length;
-  char msg[MAXLINE];
-  struct sockaddr_in  servaddr,cliaddr;
+  int socketDescriptor = socket(AF_INET, SOCK_DGRAM, 0);
+  int number;
+  socklen_t addressLength;
+  char message[MAXLINE];
 
-  socket_descriptor = socket(AF_INET,SOCK_DGRAM,0);
+  struct sockaddr_in  serverAddress,clientAddress;
+  serverAddress.sin_family = AF_INET;
+  serverAddress.sin_addr.s_addr=INADDR_ANY;
+  serverAddress.sin_port=htons(PORT);
 
-  servaddr.sin_family = AF_INET;
-  servaddr.sin_addr.s_addr=INADDR_ANY;
-  servaddr.sin_port=htons(5035);
+  bind(socketDescriptor,(struct sockaddr*)&serverAddress,sizeof(serverAddress));
 
-  bind(socket_descriptor,(struct sockaddr*)&servaddr,sizeof(servaddr));
+  printf("\nServer Started ...\n");
 
-  printf("\nServer Started ...");
-while(1){
+  while(1){
     printf("\n");
-    length = sizeof(cliaddr);
+    addressLength = sizeof(clientAddress);
 
-    n = recvfrom(socket_descriptor,msg,MAXLINE,0,(struct sockaddr*)&cliaddr,&length);
+    number = recvfrom(socketDescriptor,message,MAXLINE,0,(struct sockaddr*)&clientAddress,&addressLength);
 
-    printf("\n Client's Message:%s ",msg);
+    printf("\n Client's Message: %s ",message);
 
-    if(n<6)
+    if(number<6)
       perror("send error");
 
-      sendto(socket_descriptor,msg,n,0,(struct sockaddr*)&cliaddr,length);
+      sendto(socketDescriptor,message,number,0,(struct sockaddr*)&clientAddress,addressLength);
   }
   return 0;
 }
