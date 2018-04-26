@@ -27,33 +27,38 @@ Thanks.
 int main()
 {
     int size;
-    int socket_descriptor = socket(AF_INET, SOCK_STREAM, 0);
-    struct sockaddr_in server_address, client_address;
-    socklen_t client_length;
-    struct stat x;
+    int socketDescriptor = socket(AF_INET, SOCK_STREAM, 0);
+    struct sockaddr_in serverAddress, clientAddress;
+   
+    socklen_t clientLength;
+    
+    struct stat statVariable;
+   
     char buffer[100], file[1000];
+    
     FILE *filePointer;
-    bzero(&server_address, sizeof(server_address));
-    server_address.sin_family = AF_INET;
-    server_address.sin_addr.s_addr = htonl(INADDR_ANY);
-    server_address.sin_port = htons(PORT);
-    if (bind(socket_descriptor, (struct sockaddr *)&server_address, sizeof(server_address)) == -1)
-    {
-        perror("bind");
-    }
-    listen(socket_descriptor, 5);
+    bzero(&serverAddress, sizeof(serverAddress));
+    
+    serverAddress.sin_family = AF_INET;
+    serverAddress.sin_addr.s_addr = htonl(INADDR_ANY);
+    serverAddress.sin_port = htons(PORT);
+    
+    bind(socketDescriptor, (struct sockaddr *)&serverAddress, sizeof(serverAddress));
+ 
+    listen(socketDescriptor,BACKLOG);
+
     printf("Server has started working ...");
-    int client_descriptor = accept(socket_descriptor,(struct sockaddr*)&client_address,&client_length);
+    int clientDescriptor = accept(socketDescriptor,(struct sockaddr*)&clientAddress,&clientLength);
 
     while(1){
         bzero(buffer,sizeof(buffer));
         bzero(file,sizeof(file));
-        recv(client_descriptor,buffer,sizeof(buffer),0);
+        recv(clientDescriptor,buffer,sizeof(buffer),0);
         filePointer = fopen(buffer,"r");
-        stat(buffer,&x);
-        size=x.st_size;
+        stat(buffer,&statVariable);
+        size=statVariable.st_size;
         fread(file,sizeof(file),1,filePointer);
-        send(client_descriptor,file,sizeof(file),0);
+        send(clientDescriptor,file,sizeof(file),0);
     }
         return 0;
 }
