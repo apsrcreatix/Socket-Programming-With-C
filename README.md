@@ -24,9 +24,9 @@ The Purpose of learning this course is to understand the various network layer, 
 
 ### Tips for using the repository
 
-* Use ```bash make``` . Example : ```bash make fileName``` (without extention C)
+* Use ```make``` . Example : ```make fileName``` (without extention C)
 * It will make server and client file for you.
-* Test using ```bash ./server``` in a terminal separately and ```bash ./client``` in a different terminal.
+* Test using ```./server``` in a terminal separately and ```./client``` in a different terminal.
 
 ### Reference
 
