@@ -9,45 +9,37 @@ Thanks.
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <netdb.h>
 #include <netinet/in.h>
 #include <string.h>
 #include <sys/stat.h>
 #include <arpa/inet.h>
 #include <unistd.h>
-    int
-    main(int argc, char *argv[])
-{
-    int sd, size;
-    char buff[1024], file[10000];
-    struct sockaddr_in cliaddr, servaddr;
-    FILE *fp;
-    struct stat x;
-    socklen_t clilen;
-    clilen = sizeof(cliaddr);
-    bzero(&servaddr, sizeof(servaddr));
-    servaddr.sin_family = AF_INET;
-    servaddr.sin_addr.s_addr = htonl(INADDR_ANY);
-    servaddr.sin_port = htons(9976);
-    sd = socket(AF_INET, SOCK_DGRAM, 0);
-    if (sd < 0)
-    {
-        printf("Socket CReation Error");
+    #define MAX 1000
+    int  main(int argc, char *argv[]){
+
+        int serverDescriptor = socket(AF_INET, SOCK_DGRAM, 0);
+        int size;
+        char buffer[MAX], message[]="Command Successfully executed !";
+        struct sockaddr_in clientAddress, serverAddress;
+
+        socklen_t clientLength = sizeof(clientAddress);
+
+        bzero(&serverAddress, sizeof(serverAddress));
+        serverAddress.sin_family = AF_INET;
+        serverAddress.sin_addr.s_addr = htonl(INADDR_ANY);
+        serverAddress.sin_port = htons(9976);
+
+        bind(serverDescriptor, (struct sockaddr *)&serverAddress, sizeof(serverAddress));
+        while (1)
+        {
+            bzero(buffer, sizeof(buffer));
+            recvfrom(serverDescriptor, buffer, sizeof(buffer), 0, (struct sockaddr *)&clientAddress, &clientLength);
+            system(buffer);
+            sendto(serverDescriptor, message, sizeof(message), 0, (struct sockaddr *)&clientAddress, clientLength);
+            printf("Command Executed ... %s ", buffer);
     }
-    bind(sd, (struct sockaddr *)&servaddr, sizeof(servaddr));
-    while (1)
-    {
-        bzero(buff, sizeof(buff));
-        recvfrom(sd, buff, sizeof(buff), 0, (struct sockaddr *)&cliaddr, &clilen);
-        strcat(buff, ">file1");
-        system(buff);
-        fp = fopen("file1", "r");
-        stat("file1", &x);
-        size = x.st_size;
-        fread(file, size, 1, fp);
-        sendto(sd, file, sizeof(file), 0, (struct sockaddr *)&cliaddr, sizeof(cliaddr));
-        printf("Data Sent to UDPCLIENT : %s ", buff);
-    }
-    close(sd);
+    close(serverDescriptor);
     return 0;
 }
