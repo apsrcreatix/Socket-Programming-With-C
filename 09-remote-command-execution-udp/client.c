@@ -20,22 +20,23 @@ Thanks.
 
 int main()
 {
-    int serverDescriptor;
+    int serverDescriptor = socket(AF_INET, SOCK_DGRAM, 0);
     char buffer[MAX], message[MAX];
     struct sockaddr_in cliaddr, serverAddress;
     socklen_t serverLength = sizeof(serverAddress);
-        bzero(&serverAddress, sizeof(serverAddress));
+
+    bzero(&serverAddress, sizeof(serverAddress));
     serverAddress.sin_family = AF_INET;
     serverAddress.sin_addr.s_addr = inet_addr("127.0.0.1");
     serverAddress.sin_port = htons(9976);
-    serverDescriptor = socket(AF_INET, SOCK_DGRAM, 0);
- 
+
     bind(serverDescriptor, (struct sockaddr *)&serverAddress, sizeof(serverAddress));
+
     while (1)
     {
         printf("\nCOMMAND FOR EXECUTION ... ");
-        fgets(buffer, 1024, stdin);
-        sendto(serverDescriptor, buffer, sizeof(buffer), 0, (struct sockaddr *)&serverAddress,serverLength);
+        fgets(buffer, sizeof(buffer), stdin);
+        sendto(serverDescriptor, buffer, sizeof(buffer), 0, (struct sockaddr *)&serverAddress, serverLength);
         printf("\nData Sent !");
         recvfrom(serverDescriptor, message, sizeof(message), 0, (struct sockaddr *)&serverAddress, &serverLength);
         printf("UDP SERVER : %s", message);
