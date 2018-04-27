@@ -15,7 +15,6 @@ Thanks.
 #include <netinet/in.h>
 #include <string.h>
 #include <arpa/inet.h>
-#include <sys/stat.h>
 #define MAX 1000
 
 int main()
