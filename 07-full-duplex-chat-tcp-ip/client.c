@@ -19,51 +19,50 @@ Thanks.
 #include "netdb.h"
 #include "arpa/inet.h"
 
-int main(int argc,char *argv[])
+int main()
 {
-int sd,cd;
+int socketDescriptor;
 
-struct sockaddr_in servaddr,cliaddr;
-
-socklen_t servlen,clilen;
-
-char buff[1000],buff1[1000];
+struct sockaddr_in serverAddress;
+char sendBuffer[1000],recvBuffer[1000];
 
 pid_t cpid;
 
-bzero(&servaddr,sizeof(servaddr));
+bzero(&serverAddress,sizeof(serverAddress));
 
-servaddr.sin_family=AF_INET;
-servaddr.sin_addr.s_addr=inet_addr("127.0.0.1");
-servaddr.sin_port=htons(5500);
+serverAddress.sin_family=AF_INET;
+serverAddress.sin_addr.s_addr=inet_addr("127.0.0.1");
+serverAddress.sin_port=htons(5500);
 
 /*Creating a socket, assigning IP address and port number for that socket*/
-sd=socket(AF_INET,SOCK_STREAM,0);
+socketDescriptor=socket(AF_INET,SOCK_STREAM,0);
+
 /*Connect establishes connection with the server using server IP address*/
-cd=connect(sd,(struct sockaddr*)&servaddr,sizeof(servaddr));
+connect(socketDescriptor,(struct sockaddr*)&serverAddress,sizeof(serverAddress));
+
 /*Fork is used to create a new process*/
 cpid=fork();
 if(cpid==0)
 {
 while(1)
 {
-bzero(&buff,sizeof(buff));
-printf("%s\n","Enter the input data:");
+bzero(&sendBuffer,sizeof(sendBuffer));
+printf("\nType a message here ...  ");
 /*This function is used to read from server*/
-fgets(buff,10000,stdin);
+fgets(sendBuffer,10000,stdin);
 /*Send the message to server*/
-send(sd,buff,strlen(buff)+1,0);
-printf("%s\n","Data sent…");
+send(socketDescriptor,sendBuffer,strlen(sendBuffer)+1,0);
+printf("\nMessage sent !\n");
 }
 }
 else
 {
 while(1)
 {
-bzero(&buff1,sizeof(buff1));
+bzero(&recvBuffer,sizeof(recvBuffer));
 /*Receive the message from server*/
-recv(sd,buff1,sizeof(buff1),0);
-printf("Received message from the server:%s\n",buff1);
+recv(socketDescriptor,recvBuffer,sizeof(recvBuffer),0);
+printf("\nSERVER : %s\n",recvBuffer);
 }
 }
 return 0;

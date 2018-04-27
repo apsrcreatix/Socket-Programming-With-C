@@ -19,28 +19,30 @@ Thanks.
 
 int main(int argc,char *argv[])
 {
-int ad,sd;
-struct sockaddr_in servaddr,cliaddr;
-socklen_t servlen,clilen;
-char buff[1000],buff1[1000];
+int clientSocketDescriptor,socketDescriptor;
+
+struct sockaddr_in serverAddress,clientAddress;
+socklen_t clientLength;
+
+char recvBuffer[1000],sendBuffer[1000];
 pid_t cpid;
-bzero(&servaddr,sizeof(servaddr));
+bzero(&serverAddress,sizeof(serverAddress));
 /*Socket address structure*/
-servaddr.sin_family=AF_INET;
-servaddr.sin_addr.s_addr=htonl(INADDR_ANY);
-servaddr.sin_port=htons(5500);
+serverAddress.sin_family=AF_INET;
+serverAddress.sin_addr.s_addr=htonl(INADDR_ANY);
+serverAddress.sin_port=htons(5500);
 /*TCP socket is created, an Internet socket address structure is filled with
 wildcard address & server’s well known port*/
-sd=socket(AF_INET,SOCK_STREAM,0);
+socketDescriptor=socket(AF_INET,SOCK_STREAM,0);
 /*Bind function assigns a local protocol address to the socket*/
-bind(sd,(struct sockaddr*)&servaddr,sizeof(servaddr));
+bind(socketDescriptor,(struct sockaddr*)&serverAddress,sizeof(serverAddress));
 /*Listen function specifies the maximum number of connections that kernel should queue
 for this socket*/
-listen(sd,5);
-printf("%s\n","Server is running.......");
+listen(socketDescriptor,5);
+printf("%s\n","Server is running ...");
 /*The server to return the next completed connection from the front of the
 completed connection Queue calls it*/
-ad=accept(sd,(struct sockaddr*)&cliaddr,&clilen);
+clientSocketDescriptor=accept(socketDescriptor,(struct sockaddr*)&clientAddress,&clientLength);
 /*Fork system call is used to create a new process*/
 cpid=fork();
 
@@ -48,10 +50,10 @@ if(cpid==0)
 {
 while(1)
 {
-bzero(&buff,sizeof(buff));
+bzero(&recvBuffer,sizeof(recvBuffer));
 /*Receiving the request from client*/
-recv(ad,buff,sizeof(buff),0);
-printf("Received message from the client:%s\n",buff);
+recv(clientSocketDescriptor,recvBuffer,sizeof(recvBuffer),0);
+printf("\nCLIENT : %s\n",recvBuffer);
 }
 }
 else
@@ -59,13 +61,13 @@ else
 while(1)
 {
 
-bzero(&buff1,sizeof(buff1));
-printf("%s\n","Enter the input data:");
+bzero(&sendBuffer,sizeof(sendBuffer));
+printf("\nType a message here ...  ");
 /*Read the message from client*/
-fgets(buff1,10000,stdin);
+fgets(sendBuffer,10000,stdin);
 /*Sends the message to client*/
-send(ad,buff1,strlen(buff1)+1,0);
-printf("%s\n","Data sent…");
+send(clientSocketDescriptor,sendBuffer,strlen(sendBuffer)+1,0);
+printf("\nMessage sent !\n");
 }
 }
 return 0;
